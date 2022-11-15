@@ -29,16 +29,19 @@ function Main() {
 
       if (targetValue === "swimming") {
         clonedState.spendTime[0] = !clonedState.spendTime[0];
+        clonedState.spendTime[3] = false;
         setFormState(clonedState);
       }
       // else if Bathing
       else if (targetValue === "bathing") {
         clonedState.spendTime[1] = !clonedState.spendTime[1];
+        clonedState.spendTime[3] = false;
         setFormState(clonedState);
       }
       // else if Chatting
       else if (targetValue === "chatting") {
         clonedState.spendTime[2] = !clonedState.spendTime[2];
+        clonedState.spendTime[3] = false;
         setFormState(clonedState);
       }
       // else dont like
