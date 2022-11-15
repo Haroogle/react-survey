@@ -13,7 +13,7 @@ function ItemsList({ list }) {
     <ul>
       {list.map((item, index) => {
         if (item === true) {
-          <li>{answersSet[index]}</li>;
+          return <li>{answersSet[index]}</li>;
         }
       })}
     </ul>
