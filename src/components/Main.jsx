@@ -1,7 +1,8 @@
 import { useState } from "react";
 const initialState = {
   colour: "",
-  spendTime: "",
+  // spendTime: { 0: false, 1: false, 2: false, 3: false },
+  spendTime: [false, false, false, false],
   review: "",
   userName: "",
   email: "",
@@ -23,7 +24,38 @@ function Main() {
       setFormState({ ...formState, colour: targetValue });
     }
     if (targetName === "spend-time") {
-      setFormState({ ...formState, spendTime: targetValue });
+      // Based on the targetName value, update respective position in array spendTime
+      const clonedState = { ...formState };
+
+      if (targetValue === "swimming") {
+        clonedState.spendTime[0] = !clonedState.spendTime[0];
+        setFormState(clonedState);
+      }
+      // else if Bathing
+      else if (targetValue === "bathing") {
+        clonedState.spendTime[1] = !clonedState.spendTime[1];
+        setFormState(clonedState);
+      }
+      // else if Chatting
+      else if (targetValue === "chatting") {
+        clonedState.spendTime[2] = !clonedState.spendTime[2];
+        setFormState(clonedState);
+      }
+      // else dont like
+      else {
+        // if i dont like is false, set to true and the rest to false
+        if (clonedState.spendTime[3] === false) {
+          clonedState.spendTime[0] = false;
+          clonedState.spendTime[1] = false;
+          clonedState.spendTime[2] = false;
+          clonedState.spendTime[3] = true;
+        }
+        // if checkbox is true, update to false
+        else {
+          clonedState.spendTime[3] = false;
+        }
+        setFormState(clonedState);
+      }
     }
     if (targetName === "review") {
       setFormState({ ...formState, review: targetValue });
@@ -35,6 +67,7 @@ function Main() {
       setFormState({ ...formState, email: targetValue });
     }
   };
+
   return (
     <main className="main">
       <section className={`main__list ${open ? "open" : ""}`}>
@@ -98,26 +131,50 @@ function Main() {
             <ul>
               <li>
                 <label>
-                  <input name="spend-time" type="checkbox" value="swimming" />
+                  <input
+                    name="spend-time"
+                    type="checkbox"
+                    value="swimming"
+                    checked={formState.spendTime[0]}
+                    onChange={handleChange}
+                  />
                   Swimming
                 </label>
               </li>
               <li>
                 <label>
-                  <input name="spend-time" type="checkbox" value="bathing" />
+                  <input
+                    name="spend-time"
+                    type="checkbox"
+                    value="bathing"
+                    checked={formState.spendTime[1]}
+                    onChange={handleChange}
+                  />
                   Bathing
                 </label>
               </li>
               <li>
                 <label>
-                  <input name="spend-time" type="checkbox" value="chatting" />
+                  <input
+                    name="spend-time"
+                    type="checkbox"
+                    value="chatting"
+                    checked={formState.spendTime[2]}
+                    onChange={handleChange}
+                  />
                   Chatting
                 </label>
               </li>
               <li>
                 <label>
-                  <input name="spend-time" type="checkbox" value="noTime" />I
-                  don't like to spend time with it
+                  <input
+                    name="spend-time"
+                    type="checkbox"
+                    value="noTime"
+                    checked={formState.spendTime[3]}
+                    onChange={handleChange}
+                  />
+                  I don't like to spend time with it
                 </label>
               </li>
             </ul>
