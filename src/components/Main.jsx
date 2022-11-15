@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AnswersList from "./AnswersList";
 const initialState = {
   colour: "",
   // spendTime: { 0: false, 1: false, 2: false, 3: false },
@@ -10,9 +11,12 @@ const initialState = {
 function Main() {
   const [open, setOpen] = useState(false); //Ignore this state
   const [formState, setFormState] = useState(initialState);
+  const [answersList, setAnswersList] = useState([]);
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("test string");
+    setAnswersList([...answersList, formState]);
+
+    setFormState(initialState);
   };
 
   const handleChange = (event) => {
@@ -76,6 +80,7 @@ function Main() {
       <section className={`main__list ${open ? "open" : ""}`}>
         <h2>Answers list</h2>
         {/* answers should go here */}
+        <AnswersList answersList={answersList} />
       </section>
       <section className="main__form">
         <form className="form" onSubmit={handleSubmit}>
@@ -184,15 +189,31 @@ function Main() {
           </div>
           <label>
             What else have you got to say about your rubber duck?
-            <textarea name="review" cols="30" rows="10"></textarea>
+            <textarea
+              name="review"
+              cols="30"
+              rows="10"
+              value={formState.review}
+              onChange={handleChange}
+            ></textarea>
           </label>
           <label>
             Put your name here (if you feel like it):
-            <input type="text" name="username" value="" />
+            <input
+              type="text"
+              name="username"
+              value={formState.userName}
+              onChange={handleChange}
+            />
           </label>
           <label>
             Leave us your email pretty please??
-            <input type="email" name="email" value="" />
+            <input
+              type="email"
+              name="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
           </label>
           <input
             className="form__submit"
